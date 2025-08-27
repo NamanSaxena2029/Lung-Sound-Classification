@@ -74,7 +74,7 @@ All code is written in Python. Key libraries used:
 ![Confusion Matrix](Images/Confusion%20Matrix.png)
 ![ROC Curve](Images/ROC%20Curve.png)
 
-## 🌐 Streamlit Web App
+## Streamlit Web App
 1. **Modern UI** with sidebar navigation and clear sections ![Streamlit Sidebar](Images/Sidebar%20Section.png)
 2. **Upload audio** (WAV, MP3, M4A) ![Upload Section](Images/Audio%20Upload%20and%20Playback.png)
 3. **Audio playback** and feature visualizations
