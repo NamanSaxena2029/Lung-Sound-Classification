@@ -64,16 +64,28 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## Streamlit Web App
-1. **Modern UI** with sidebar navigation and clear sections
-2. **Upload audio** (WAV, MP3, M4A)
+## Results
+- Accuracy: **91%**
+- F1-Score: **0.90**
+- Precision: **0.89**
+- Recall: **0.92**
+
+![Accuracy vs Loss graph](Images/Accuracy%20vs%20Loss%20graph.png)
+![Confusion Matrix](Images/Confusion%20Matrix.png)
+![ROC Curve](Images/ROC%20Curve.png)
+
+## 🌐 Streamlit Web App
+1. **Modern UI** with sidebar navigation and clear sections ![Streamlit Sidebar](Images/Sidebar%20Section.png)
+2. **Upload audio** (WAV, MP3, M4A) ![Upload Section](Images/Audio%20Upload%20and%20Playback.png)
 3. **Audio playback** and feature visualizations
 4. **Prediction results**
 	- Primary disease prediction
 	- Confidence score
 	- Probability distribution (bar chart & table)
 	- Disease info and actionable recommendations
-5. **Medical disclaimer** and educational purpose note
+	![Prediction Output](Images/Prediction%20Output.png)
+	![Prediction Output](Images/Prediction%20Output%202.png)
+5. **Medical disclaimer** and educational purpose note![Disclaimer](Images/Disclaimer.png)
 
 ---
 
