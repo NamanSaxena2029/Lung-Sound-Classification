@@ -1,10 +1,10 @@
-# 🫁 Respiratory Disease Prediction System
+# Respiratory Disease Prediction System
 
 An end-to-end AI project for lung disease prediction using respiratory sound recordings and a hybrid CNN+LSTM deep learning model. This repository covers everything from environment setup, data preparation, model training, to deploying a modern Streamlit web app for real-time predictions.
 
 ---
 
-## 📦 Project Setup
+## Project Setup
 1. **Clone the repository**
 	```bash
 	git clone <your-repo-url>
@@ -25,7 +25,7 @@ An end-to-end AI project for lung disease prediction using respiratory sound rec
 
 ---
 
-## 🏗️ Environment & Imports
+## Environment & Imports
 All code is written in Python. Key libraries used:
 - `numpy`, `pandas` for data handling
 - `librosa` for audio feature extraction
@@ -36,7 +36,7 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 📊 Data Preparation & Feature Extraction
+## Data Preparation & Feature Extraction
 1. **Read and organize patient diagnosis and audio files**
 2. **Extract features** from each audio file:
 	- MFCC coefficients
@@ -49,7 +49,7 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 🧠 Model Architecture & Training
+## Model Architecture & Training
 1. **CNN+LSTM Hybrid Model**
 	- 1D CNN layers for feature extraction
 	- LSTM layer for temporal pattern learning
@@ -64,7 +64,7 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 🌐 Streamlit Web App
+## Streamlit Web App
 1. **Modern UI** with sidebar navigation and clear sections
 2. **Upload audio** (WAV, MP3, M4A)
 3. **Audio playback** and feature visualizations
@@ -77,7 +77,7 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 📝 How to Run
+## How to Run
 1. Start the app:
 	```bash
 	streamlit run lung_disease_predictor.py
@@ -87,7 +87,7 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 - `lung_disease_predictor.py` : Streamlit web app
 - `final_model.h5` : Trained CNN+LSTM model
 - `extracted_dataset/` : Respiratory sound dataset
@@ -96,15 +96,15 @@ All code is written in Python. Key libraries used:
 
 ---
 
-## 🏥 Medical Disclaimer
+## Medical Disclaimer
 This tool is for educational purposes only. It does not provide medical advice, diagnosis, or treatment. For more information or concerns, please consult a qualified doctor.
 
 ---
 
-## 👨‍💻 Author
+## Author
 Developed by **Naman Saxena**
 
 ---
 
-## 📬 Contact
+## Contact
 For questions or feedback, please reach out via GitHub.
