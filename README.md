@@ -21,7 +21,7 @@ cd Lung-Sound-Classification
 ### 2. Install dependencies
 
 ```bash
-pip install streamlit librosa tensorflow matplotlib numpy pandas scikit-learn seaborn
+pip install streamlit librosa tensorflow matplotlib numpy pandas scikit-learn seaborn gdown
 ```
 
 ### 3. Dataset
@@ -33,6 +33,7 @@ pip install streamlit librosa tensorflow matplotlib numpy pandas scikit-learn se
 ### 4. Model File
 
 * After training, save your model as `final_model.h5` in the project root directory.
+* The app will **auto-download** the model from Google Drive if `final_model.h5` is not found locally.
 
 ---
 
@@ -41,11 +42,12 @@ pip install streamlit librosa tensorflow matplotlib numpy pandas scikit-learn se
 All code is written in Python. Key libraries used:
 
 * `numpy`, `pandas` for data handling
-* `librosa` for audio feature extraction
-* `matplotlib`, `seaborn` for visualization
+* `librosa` for audio feature extraction and visualization
+* `matplotlib` for waveform, spectrogram, and feature plots
 * `tensorflow.keras` for deep learning (CNN, LSTM)
 * `scikit-learn` for preprocessing, metrics, and cross-validation
 * `streamlit` for the web interface
+* `gdown` for auto-downloading the trained model
 
 ---
 
@@ -55,7 +57,7 @@ All code is written in Python. Key libraries used:
 
 2. **Extract features** from each audio file:
 
-   * MFCC coefficients
+   * MFCC coefficients (40)
    * Chroma features
    * Mel spectrogram
    * Spectral contrast
@@ -115,32 +117,61 @@ All code is written in Python. Key libraries used:
 
 ## Streamlit Web App
 
-### 1. Modern UI with sidebar navigation and clear sections
+### 1. Modern UI with sidebar navigation
+
+The sidebar includes:
+* Model information (CNN + LSTM architecture details)
+* Supported audio formats (WAV, MP3, M4A)
+* Step-by-step usage instructions
+* Medical disclaimer notice
 
 ![Streamlit Sidebar](Images/Sidebar%20Section.png)
 
 ### 2. Upload audio (WAV, MP3, M4A)
 
+* Upload any respiratory sound recording
+* File name and size are displayed after upload
+* In-browser audio playback available
+
 ![Upload Section](Images/Audio%20Upload%20and%20Playback.png)
 
-### 3. Audio playback and feature visualizations
+### 3. Tabbed Results Interface
 
-Users can upload respiratory sound recordings and visualize extracted features directly in the interface.
+After uploading, results are shown in **two tabs**:
 
-### 4. Prediction results
+---
 
-* Primary disease prediction
-* Confidence score
-* Probability distribution (bar chart & table)
-* Disease information and actionable recommendations
+#### 🩺 Tab 1 — Prediction Results
+
+* **Primary disease prediction** with confidence score
+* **Disease description** for the predicted condition
+* **Confidence distribution** bar chart across all 6 classes
+* **Detailed probability table** with High/Low confidence labels
+* **Recommendations** with health tips for the predicted disease
 
 ![Prediction Output](Images/Prediction%20Output.png)
 
 ![Prediction Output](Images/Prediction%20Output%202.png)
 
-### 5. Medical disclaimer and educational purpose note
+* **Medical disclaimer and educational purpose note
 
 ![Disclaimer](Images/Disclaimer.png)
+---
+
+#### 📊 Tab 2 — Audio Analysis
+
+All visualizations are displayed in a **2-column grid layout**:
+
+| Visualization | Description |
+|---|---|
+| 🎵 Audio Waveform | Amplitude over time |
+| 🔊 Mel Spectrogram | Frequency-time energy map (magma colormap) |
+| 🎼 MFCC Features | 40 MFCC coefficients heatmap (coolwarm) |
+| 🎹 Chroma Features | Pitch class energy over time (viridis) |
+| 📉 Spectral Contrast | Frequency band contrast (plasma) |
+| 🎶 Tonnetz Features | Tonal centroid features (RdYlGn) |
+| 📈 Prediction Confidence | Progress bar showing confidence % |
+| ⏱ Processing Time | Time taken + sample rate + audio duration |
 
 ---
 
@@ -153,7 +184,21 @@ streamlit run lung_disease_predictor.py
 ```
 
 2. Open the provided **local URL** in your browser
-3. Upload a lung sound file and view predictions
+3. Upload a lung sound file (WAV / MP3 / M4A)
+4. View prediction results in **Tab 1** and audio feature analysis in **Tab 2**
+
+---
+
+## Supported Disease Classes
+
+| Class | Disease |
+|---|---|
+| 0 | COPD (Chronic Obstructive Pulmonary Disease) |
+| 1 | Healthy |
+| 2 | URTI (Upper Respiratory Tract Infection) |
+| 3 | Bronchiectasis |
+| 4 | Pneumonia |
+| 5 | Bronchiolitis |
 
 ---
 
@@ -162,11 +207,11 @@ streamlit run lung_disease_predictor.py
 ```
 Lung-Sound-Classification
 │
-├── lung_disease_predictor.py
-├── final_model.h5
 ├── extracted_dataset/
+├── CNN+LSTM.ipynb
+├── final_model.h5
+├── lung_disease_predictor.py
 ├── Images/
-├── style.css
 └── README.md
 ```
 
