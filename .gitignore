@@ -1,0 +1,31 @@
+# Dataset
+extracted_dataset/
+dataset/
+
+# Model files
+*.h5
+*.hdf5
+*.keras
+
+# Audio files
+*.wav
+*.mp3
+*.flac
+
+# Zip files
+*.zip
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+
+# OS files
+.DS_Store
+Thumbs.db
