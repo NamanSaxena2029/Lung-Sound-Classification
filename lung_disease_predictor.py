@@ -162,23 +162,25 @@ if uploaded_file is not None:
         # TAB 2
         # -------------------------
         with tab2:
-            st.markdown("### 🎵 Audio Waveform")
-            fig, ax = plt.subplots()
+            st.markdown("#### 🎵 Audio Waveform")
+            fig, ax = plt.subplots(figsize=(6, 2))
             librosa.display.waveshow(sound, sr=sr, ax=ax)
-            st.pyplot(fig)
+            ax.set_title("Waveform", fontsize=10)
+            st.pyplot(fig, use_container_width=False)
 
-            st.markdown("### 🔊 Mel Spectrogram")
-            fig, ax = plt.subplots()
+            st.markdown("#### 🔊 Mel Spectrogram")
+            fig, ax = plt.subplots(figsize=(6, 2))
             S = librosa.feature.melspectrogram(y=sound, sr=sr)
             S_dB = librosa.power_to_db(S, ref=np.max)
             img = librosa.display.specshow(S_dB, sr=sr, x_axis='time', y_axis='mel', ax=ax)
             fig.colorbar(img, ax=ax, format="%+2.0f dB")
-            st.pyplot(fig)
+            ax.set_title("Mel Spectrogram", fontsize=10)
+            st.pyplot(fig, use_container_width=False)
 
-            st.markdown("### 📈 Prediction Confidence")
+            st.markdown("#### 📈 Prediction Confidence")
             st.progress(int(confidence * 100))
 
-            st.markdown("### ⏱ Processing Time")
+            st.markdown("#### ⏱ Processing Time")
             st.write(round(end_time - start_time, 2), "seconds")
 
     except Exception as e:
