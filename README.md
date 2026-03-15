@@ -214,11 +214,10 @@ Lung-Sound-Classification
 ├── Images/
 └── README.md
 ```
-
-* `lung_disease_predictor.py` : Streamlit web app
-* `final_model.h5` : Trained CNN+LSTM model
 * `extracted_dataset/` : Respiratory sound dataset
-* `style.css` : Optional custom styles
+* `CNN+LSTM.ipynb` : Data preparation, feature extraction, model training and evaluation
+* `final_model.h5` : Trained CNN+LSTM model (auto-downloaded if missing)
+* `lung_disease_predictor.py` : Streamlit web app
 * `README.md` : Project documentation
 
 ---
