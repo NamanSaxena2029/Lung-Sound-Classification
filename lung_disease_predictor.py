@@ -18,7 +18,6 @@ model = load_model(model_path, compile=False)
 
 st.set_page_config(page_title="Respiratory Disease Prediction System", page_icon="🫁", layout="wide")
 
-# Sidebar Navigation
 with st.sidebar:
     st.title("🎵 Model Information")
     st.markdown("**Model:** CNN + LSTM Hybrid")
@@ -40,7 +39,6 @@ with st.sidebar:
     st.markdown("---")
     st.info("This tool is for educational purposes only. Consult a doctor for medical advice.")
 
-# Header
 st.markdown(
     """
     <div style="text-align:left;">
@@ -93,7 +91,6 @@ def audio_features(filename):
     concat = np.concatenate((mfccs, chroma, mel, contrast, tonnetz))
     return concat, sound, sample_rate
 
-# Upload Section
 st.markdown("## 📁 Upload Audio Sample")
 uploaded_file = st.file_uploader("Choose an audio file", type=["wav", "mp3", "m4a"])
 
@@ -109,21 +106,68 @@ if uploaded_file is not None:
     st.audio(temp_path, format="audio/wav")
 
     try:
+        # -------------------------
+        # PREDICTION
+        # -------------------------
+        start_time = time.time()
 
         with st.spinner("Analyzing lung sound..."):
-
-            start_time = time.time()
-
             features, sound, sr = audio_features(temp_path)
+            features = np.reshape(features, (1, features.shape[0], 1))
+            prediction = model.predict(features, verbose=0)
 
-            # --------- NEW: Waveform ----------
-            st.markdown("### Audio Waveform")
+        end_time = time.time()
+
+        predicted_class = np.argmax(prediction)
+        predicted_label = index_to_label[predicted_class]
+        confidence = float(prediction[0][predicted_class])
+
+        # -------------------------
+        # TABS
+        # -------------------------
+        tab1, tab2 = st.tabs(["🩺 Prediction Results", "📊 Audio Analysis"])
+
+        # -------------------------
+        # TAB 1
+        # -------------------------
+        with tab1:
+            st.markdown("### 🩺 Analysis Results")
+
+            st.markdown(
+                f"""
+                <div style='background:#f9f9f9;padding:20px;border-radius:10px;'>
+                    <h3 style='color:#2E8B57;'>Primary Prediction: <span style='color:#2E8B57;'>{predicted_label}</span></h3>
+                    <h4>Confidence Score: <span style='color:#2E8B57;'>{confidence:.2%}</span></h4>
+                    <p style='color:#555;background:#eef;border-radius:5px;padding:8px;'>About {predicted_label}: {disease_descriptions[predicted_label]}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            st.markdown("#### Confidence Distribution")
+            prob_dict = {index_to_label[i]: float(prediction[0][i]) for i in range(len(index_to_label))}
+            st.bar_chart(prob_dict)
+
+            st.markdown("#### Detailed Probability Scores")
+            st.table({
+                "Disease": list(prob_dict.keys()),
+                "Probability (%)": [f"{v*100:.2f}%" for v in prob_dict.values()],
+                "Confidence": ["High" if i == predicted_class else "Low" for i in range(len(index_to_label))]
+            })
+
+            st.markdown("#### Recommendations")
+            st.info(f"Potential Concerns Detected: {predicted_label}\n\n{disease_tips[predicted_label]}")
+
+        # -------------------------
+        # TAB 2
+        # -------------------------
+        with tab2:
+            st.markdown("### 🎵 Audio Waveform")
             fig, ax = plt.subplots()
             librosa.display.waveshow(sound, sr=sr, ax=ax)
             st.pyplot(fig)
 
-            # --------- NEW: Spectrogram ----------
-            st.markdown("### Mel Spectrogram")
+            st.markdown("### 🔊 Mel Spectrogram")
             fig, ax = plt.subplots()
             S = librosa.feature.melspectrogram(y=sound, sr=sr)
             S_dB = librosa.power_to_db(S, ref=np.max)
@@ -131,52 +175,11 @@ if uploaded_file is not None:
             fig.colorbar(img, ax=ax, format="%+2.0f dB")
             st.pyplot(fig)
 
-            features = np.reshape(features, (1, features.shape[0], 1))
+            st.markdown("### 📈 Prediction Confidence")
+            st.progress(int(confidence * 100))
 
-            prediction = model.predict(features, verbose=0)
-
-            end_time = time.time()
-
-        predicted_class = np.argmax(prediction)
-        predicted_label = index_to_label[predicted_class]
-        confidence = float(prediction[0][predicted_class])
-
-        st.markdown("### 🩺 Analysis Results")
-
-        st.markdown(
-            f"""
-            <div style='background:#f9f9f9;padding:20px;border-radius:10px;'>
-                <h3 style='color:#2E8B57;'>Primary Prediction: {predicted_label}</h3>
-                <h4>Confidence Score: {confidence:.2%}</h4>
-                <p>About {predicted_label}: {disease_descriptions[predicted_label]}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        # --------- NEW: Confidence Gauge ----------
-        st.markdown("### Prediction Confidence")
-        st.progress(int(confidence * 100))
-
-        # Probability Distribution
-        st.markdown("#### Confidence Distribution")
-        prob_dict = {index_to_label[i]: float(prediction[0][i]) for i in range(len(index_to_label))}
-        st.bar_chart(prob_dict)
-
-        # Detailed Probability Table
-        st.markdown("#### Detailed Probability Scores")
-        st.table({
-            "Disease": list(prob_dict.keys()),
-            "Probability (%)": [f"{v*100:.2f}%" for v in prob_dict.values()]
-        })
-
-        # --------- NEW: Processing Time ----------
-        st.markdown("### Processing Time")
-        st.write(round(end_time - start_time, 2), "seconds")
-
-        # Recommendations
-        st.markdown("#### Recommendations")
-        st.info(f"Potential Concerns Detected: {predicted_label}\n\n{disease_tips[predicted_label]}")
+            st.markdown("### ⏱ Processing Time")
+            st.write(round(end_time - start_time, 2), "seconds")
 
     except Exception as e:
         st.error(f"Error processing file: {e}")
