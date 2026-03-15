@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import librosa.display
 from tensorflow.keras.models import load_model
 import os
+import pkg_resources
 import gdown
 
 model_path = "final_model.h5"
