@@ -153,7 +153,7 @@ After uploading, results are shown in **two tabs**:
 
 ![Prediction Output](Images/Prediction%20Output%202.png)
 
-* **Medical disclaimer and educational purpose note
+* **Medical disclaimer and educational purpose note**
 
 ![Disclaimer](Images/Disclaimer.png)
 ---
