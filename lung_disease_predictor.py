@@ -5,7 +5,15 @@ import matplotlib.pyplot as plt
 import librosa.display
 from tensorflow.keras.models import load_model
 import os
+import gdown
 
+model_path = "final_model.h5"
+
+if not os.path.exists(model_path):
+    url = "https://drive.google.com/uc?id=1KIor01gadBWov5ctUyqszWLDornZgcHs"
+    gdown.download(url, model_path, quiet=False)
+
+model = load_model(model_path, compile=False)
 st.set_page_config(page_title="Respiratory Disease Prediction System", page_icon="🫁", layout="wide")
 
 # Sidebar Navigation
