@@ -11,7 +11,7 @@ import time
 model_path = "final_model.h5"
 
 if not os.path.exists(model_path):
-    url = "https://drive.google.com/uc?id=1KIor01gadBWov5ctUyqszWLDornZgcHs"
+    url = "https://drive.google.com/uc?id=1RUJDSiGMb3kJ2BjnQ2KDZYpdQA4SAFIT"
     gdown.download(url, model_path, quiet=False)
 
 model = load_model(model_path, compile=False)
